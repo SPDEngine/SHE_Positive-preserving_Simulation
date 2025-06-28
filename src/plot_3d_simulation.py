@@ -34,9 +34,9 @@ def main(fps: int = 10, output_prefix: str = "msSupDxDt", M: int = 4) -> None:
         print(f"Number of spatial points: {num_spatial_points}, Computed points: {1/h_num}")
 
         time_grid = np.linspace(0, 0.5, num_time_steps)
-        print(f"Time grid: {time_grid}")
+        # print(f"Time grid: {time_grid}")
         space_grid = np.linspace(0, 1, num_spatial_points)
-        print(f"Space grid: {space_grid}")
+        # print(f"Space grid: {space_grid}")
 
         # Downsample grids for faster 3D plotting and animation
         max_pts = 100
@@ -58,8 +58,8 @@ def main(fps: int = 10, output_prefix: str = "msSupDxDt", M: int = 4) -> None:
         ax_3d.set_zlabel(r'$u(t,x)$')
         ax_3d.set_title(r'3D Mesh Plot of $u(t,x)$ vs. Time and Space')
         plt.tight_layout()
-        fig_3d.savefig(f'{output_prefix}_sample_{m_idx}_3d.png')
-        print(f"3D plot saved as {output_prefix}_sample_{m_idx}_3d.png")
+        fig_3d.savefig(f'{output_prefix}_M-{m_idx+1}_3d.png')
+        print(f"3D plot saved as {output_prefix}_M-{m_idx+1}_3d.png")
 
         # 2D Animation
         fig_2d, ax_2d = plt.subplots()
@@ -105,10 +105,10 @@ def main(fps: int = 10, output_prefix: str = "msSupDxDt", M: int = 4) -> None:
                 def update_progress(i, n):
                     pbar.update(1)
 
-                ani.save(f'{output_prefix}_sample_{m_idx}_2d.mp4', writer='ffmpeg', fps=fps, progress_callback=update_progress)
+                ani.save(f'{output_prefix}_{M}-{m_idx+1}_2d.mp4', writer='ffmpeg', fps=fps, progress_callback=update_progress)
 
             print()
-            print(f"Animation saved as {output_prefix}_sample_{m_idx}_2d.mp4")
+            print(f"Animation saved as {output_prefix}_{M}-{m_idx+1}_2d.mp4")
         except ValueError as e:
             print(f"Error saving animation: {e}")
             print("Please ensure ffmpeg is installed and accessible in your PATH.")
