@@ -21,7 +21,7 @@ from tqdm.auto import trange
 
 
 def run_sup_dxdt(seed: int, out_name: str, M: int = 4, alphaN: float = 1.0) -> None:
-    """Run the msSupDxDt experiment replicating the MATLAB implementation.
+    """Run the splitting scheme experiment for the stochastic heat equation.
 
     Parameters
     ----------
@@ -30,7 +30,9 @@ def run_sup_dxdt(seed: int, out_name: str, M: int = 4, alphaN: float = 1.0) -> N
     out_name : str
         Prefix for output files ('.npz' and '.png' will be appended).
     M : int, optional
-        Number of Monte Carlo samples (default is 18).
+        Number of Monte Carlo samples (default is 4).
+    alphaN : float, optional
+        Noise strength parameter (default is 1.0).
 
     Returns
     -------
