@@ -83,7 +83,7 @@ def main() -> None:
     ax_2d.set_title(f'2D Plot of u_exLT at Time = {time_grid[0]:.3f}')
     ax_2d.set_ylim(u_exLT.min(), u_exLT.max()) # Set fixed y-limits
     plt.tight_layout()
-    plt.show()
+    # plt.show()
 
     # Create the animation
     def animate(i):

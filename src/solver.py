@@ -85,23 +85,6 @@ def run_sup_dxdt(seed: int, out_name: str, M: int = 4, alphaN: float = 1.0, T: f
     sqrt_factor = np.sqrt(Nx_ex - 1) * f_factor
     const_factor = -0.5 * (f_factor ** 2) * (Nx_ex - 1) * dt_ex
 
-    # Precompute coarse-level operators and grouping factors
-    # These are no longer needed with a single discretization level
-    # expD_list = []
-    # k_list = []
-    # kx_list = []
-    # levels = len(dt_num)
-    # for l in range(levels):
-    #     dt = dt_num[l]
-    #     h = h_num[l]
-    #     k = int(round(dt / dt_ex))
-    #     kx = int(round(h / h_ex))
-    #     k_list.append(k)
-    #     kx_list.append(kx)
-    #     Nx_l = int(Nx_num[l])
-    #     D_l = make_laplacian(Nx_l)
-    #     expD_list.append(expm(dt * D_l))
-
     for m in trange(M, desc="samples"):
         # generate fine noise increments and precompute multiplicative factors
         W = rng.standard_normal((Nt_ex, Nx_ex - 1)) * np.sqrt(dt_ex)
@@ -114,65 +97,9 @@ def run_sup_dxdt(seed: int, out_name: str, M: int = 4, alphaN: float = 1.0, T: f
         for t in trange(Nt_ex, desc="reference", leave=False):
             u_exLT[:, t + 1] = expD_ex @ (u_exLT[:, t] * R[t, :])
 
-        # for l in reversed(range(len(dt_num))):
-        #     Nt = int(Nt_num[l])
-        #     Nx_l = int(Nx_num[l])
-        #     dt = dt_num[l]
-        #     h = h_num[l]
-        #     k = k_list[l]
-        #     kx = kx_list[l]
-        #     expD = expD_list[l]
-
-        #     xx = np.arange(x_0 + h, x_end, h)
-
-
-        #     err = np.zeros((Nx_l - 1, Nt + 1))
-
-        #     # Coarse noise coupling: vectorized block sums
-        #     if k == 1 and kx == 1:
-        #         V = W
-        #     else:
-        #         # reshape W of shape (Nt_ex, Nx_ex-1) to (Nt, k, Nx_l-1, kx)
-        #         V = W.reshape(Nt, k, Nx_l - 1, kx).sum(axis=(1, 3)) / np.sqrt(kx)
-
-        #     uLT = u_0(xx)
-        #     for t in trange(Nt, desc="scheme", leave=False):
-        #         tempo = uLT * np.exp(
-        #             (-f(uLT) ** 2 / 2 * (Nx_l - 1)) * dt
-        #             + np.sqrt(Nx_l - 1) * f(uLT) * V[t, :]
-        #         )
-        #         uLT = expD @ tempo
-        #         for j in range(Nx_l - 1):
-        #             err[j, t + 1] = (
-        #                 u_exLT[kx * j, k * t + 1] - uLT[j]
-        #             ) ** 2
-
-        #     errorLT[l][m] = err
-
-    # maxLT = np.zeros(len(dt_num))
-    # for l in range(len(dt_num)):
-        # tmp = sum(errorLT[l]) / M
-        # maxLT[l] = tmp.max()
 
     out = Path(f"{out_name}.npz")
     # np.savez(out, dt_num=dt_num, h_num=h_num, maxLT=maxLT, u_exLT=u_exLT)
     np.savez(out, dt_num=dt_num, h_num=h_num, u_exLT=u_exLT)
     print(f"Results stored in {out}")
-
-    # # simple plot
-    # import matplotlib.pyplot as plt
-
-    # plt.loglog(dt_num, np.sqrt(maxLT), "ms-", label="Error LT")
-    # plt.loglog(dt_num, dt_num ** 0.25, "r--", label="Slope 1/4")
-    # plt.xlabel("$\\Delta t$")
-    # plt.ylabel("Error")
-    # plt.legend(loc="lower right")
-    # plt.title(f"$M_s={M}$")
-
-    # fig_path = Path(f"{out_name}.png")
-    # plt.savefig(fig_path, dpi=150)
-    # plt.close()
-    # print(f"Results stored in {out} and {fig_path}")
-
-
 
