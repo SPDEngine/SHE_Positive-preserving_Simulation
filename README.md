@@ -16,3 +16,9 @@ Some functions were translated from the original MATLAB code available at [Zenod
 Further background and a brief podcast discussion can be found in the
 official reference entry at
 <https://spdes-bib.readthedocs.io/en/latest/bib_entries/brehier.cohen.ea:24:analysis.html>.
+
+## License
+
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+
+The code is translated from Matlab to Python by Le Chen. Le Chen would like to thank David Cohen for his help in understanding the original MATLAB code.
