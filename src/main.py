@@ -1,5 +1,6 @@
 
 import argparse
+import sys
 from .solver import run_sup_dxdt
 from .plot_3d_simulation import main as plot_main
 
@@ -9,6 +10,10 @@ def main():
     parser.add_argument('--output', type=str, default='msSupDxDt', help='Output file name prefix.')
     parser.add_argument('--samples', type=int, default=18, help='Number of Monte Carlo samples.')
     parser.add_argument('--no-plot', action='store_true', help='Suppress plotting the results.')
+
+    if len(sys.argv) == 1:
+        parser.print_help(sys.stderr)
+        sys.exit(1)
 
     args = parser.parse_args()
 
