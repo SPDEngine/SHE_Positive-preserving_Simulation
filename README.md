@@ -46,13 +46,14 @@ To install and run this project, follow these steps:
     You can also customize the simulation with the following options:
 
     ```bash
-    she-sim --seed <seed> --samples <samples> --output <output_prefix> --alphaN <alphaN> --no-plot
+    she-sim --seed <seed> --samples <samples> --output <output_prefix> --alphaN <alphaN> --T <T> --no-plot
     ```
 
     -   `--seed`: Random seed for the simulation (default: 93).
     -   `--samples`: Number of Monte Carlo samples (default: 4).
     -   `--output`: Prefix for the output file names (default: `msSupDxDt`).
     -   `--alphaN`: Noise strength parameter (default: 1.0).
+    -   `--T`: End time of the simulation (default: 0.5).
     -   `--no-plot`: Suppress the generation of plots.
 
 ## License

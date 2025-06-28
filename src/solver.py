@@ -17,7 +17,7 @@ from .noise import generate_noise
 from tqdm.auto import trange
 
 
-def run_sup_dxdt(seed: int, out_name: str, M: int = 4, alphaN: float = 1.0) -> None:
+def run_sup_dxdt(seed: int, out_name: str, M: int = 4, alphaN: float = 1.0, T: float = 0.5) -> None:
     """Run the splitting scheme experiment for the stochastic heat equation.
 
     Parameters
@@ -30,6 +30,8 @@ def run_sup_dxdt(seed: int, out_name: str, M: int = 4, alphaN: float = 1.0) -> N
         Number of Monte Carlo samples (default is 4).
     alphaN : float, optional
         Noise strength parameter (default is 1.0).
+    T : float, optional
+        End time of the simulation (default is 0.5).
 
     Returns
     -------
@@ -48,7 +50,7 @@ def run_sup_dxdt(seed: int, out_name: str, M: int = 4, alphaN: float = 1.0) -> N
 
     
     x_0, x_end = 0.0, 1.0
-    t_0, t_end = 0.5 * 0, 0.5  # t_0=0; t_end=.5 in the scripts
+    t_0 = 0.5 * 0
 
     u_0 = lambda x: np.cos(np.pi * (x - 0.5))
 
@@ -57,8 +59,8 @@ def run_sup_dxdt(seed: int, out_name: str, M: int = 4, alphaN: float = 1.0) -> N
     h_ex = 2.0 ** -10
     dt_ex = h_ex ** 2
 
-    NNt = ((t_end - t_0) / ddt).astype(int)
-    Nt_ex = int((t_end - t_0) / dt_ex)
+    NNt = ((T - t_0) / ddt).astype(int)
+    Nt_ex = int((T - t_0) / dt_ex)
 
     Nx = []
     for h in hh:
