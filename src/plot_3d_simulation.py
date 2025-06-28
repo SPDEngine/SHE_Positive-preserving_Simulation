@@ -98,7 +98,7 @@ def main() -> None:
     # Save the animation
     print("Saving animation... This may take a while.")
     try:
-        with tqdm(total=num_time_steps, desc="Saving animation") as pbar:
+        with tqdm(total=len(frame_idx), desc="Saving animation") as pbar:
             def update_progress(i, n):
                 pbar.update(1)
 
