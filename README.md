@@ -2,7 +2,7 @@
 
 ![3D Plot of u(t,x)](Demo_2-1_3d.png)
 
-<video controls src="Demo_2-1_2d.gif" title="2D Animation of u(t,x)"></video>
+![2D Animation of u(t,x)](Demo_2-1_2d.gif)
 
 The goal of this repository is to simulate the Stochastic Heat Equation (SHE) on the spatial domain (0,1) with homogeneous Dirichlet boundary conditions, using a positivity-preserving splitting scheme. Outputs are presented as 3D plots and MP4 animations.
 
