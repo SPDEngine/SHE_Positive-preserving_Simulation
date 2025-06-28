@@ -24,7 +24,7 @@ def main():
     run_sup_dxdt(args.seed, args.output, args.samples, args.alphaN, args.T, args.discretization_level)
 
     if not args.no_plot:
-        plot_main(args.fps, args.output)
+        plot_main(args.fps, args.output, args.samples)
 
 if __name__ == '__main__':
     main()

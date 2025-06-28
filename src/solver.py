@@ -75,9 +75,6 @@ def run_sup_dxdt(seed: int, out_name: str, M: int = 4, alphaN: float = 1.0, T: f
     x_ex = x
     Nx_ex = Nx
 
-    # storage for mean-square errors
-    errorLT = [[None] * M for _ in range(len(dt_num))]
-
     # Precompute fine-level operator and noise factors
     D_ex = make_laplacian(Nx_ex)
     expD_ex = expm(dt_ex * D_ex)
@@ -85,8 +82,11 @@ def run_sup_dxdt(seed: int, out_name: str, M: int = 4, alphaN: float = 1.0, T: f
     sqrt_factor = np.sqrt(Nx_ex - 1) * f_factor
     const_factor = -0.5 * (f_factor ** 2) * (Nx_ex - 1) * dt_ex
 
+    # storage for all samples of u_exLT
+    all_u_exLT = np.empty((M, Nx_ex - 1, Nt_ex + 1))
+
     for m in trange(M, desc="samples"):
-        # generate fine noise increments and precompute multiplicative factors
+        # generate fine noise increments
         W = rng.standard_normal((Nt_ex, Nx_ex - 1)) * np.sqrt(dt_ex)
         R = np.exp(const_factor + sqrt_factor * W)
 
@@ -96,10 +96,9 @@ def run_sup_dxdt(seed: int, out_name: str, M: int = 4, alphaN: float = 1.0, T: f
         # Reference fine solution time-stepping with progress bar
         for t in trange(Nt_ex, desc="reference", leave=False):
             u_exLT[:, t + 1] = expD_ex @ (u_exLT[:, t] * R[t, :])
-
+        all_u_exLT[m, :, :] = u_exLT
 
     out = Path(f"{out_name}.npz")
-    # np.savez(out, dt_num=dt_num, h_num=h_num, maxLT=maxLT, u_exLT=u_exLT)
-    np.savez(out, dt_num=dt_num, h_num=h_num, u_exLT=u_exLT)
+    np.savez(out, dt_num=dt_num, h_num=h_num, u_exLT=all_u_exLT)
     print(f"Results stored in {out}")
 
