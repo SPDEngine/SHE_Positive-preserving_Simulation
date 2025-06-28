@@ -1,8 +1,6 @@
 # Simulation of SHE with positivity-preserving splitting scheme
 
-The goal of this repository is to simulate the Stochastic Heat Equation (SHE)
-using a positivity-preserving splitting scheme, with outputs presented as 3D
-plots and MP4 animations.
+The goal of this repository is to simulate the Stochastic Heat Equation (SHE) on the spatial domain (0,1) with homogeneous Dirichlet boundary conditions, using a positivity-preserving splitting scheme. Outputs are presented as 3D plots and MP4 animations.
 
 ## Reference
 

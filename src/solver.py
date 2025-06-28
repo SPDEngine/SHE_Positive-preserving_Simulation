@@ -3,11 +3,8 @@
 This module provides:
 - run_sup_dxdt: Function to execute the splitting scheme experiment, compute
   mean-square errors, and save results to a .npz file and a PNG plot.
-- main: Command-line interface for running experiments.
 
-Usage
------
-python solver.py --seed 93 --output msSupDxDt --samples 18
+The simulation is performed on the spatial domain (0,1) with homogeneous Dirichlet boundary conditions.
 """
 import argparse
 from pathlib import Path
@@ -42,6 +39,8 @@ def run_sup_dxdt(seed: int, out_name: str, M: int = 4, alphaN: float = 1.0) -> N
     ------------
     Saves a '.npz' file containing 'dt_num', 'h_num', and 'maxLT', and a
     log-log error plot as a PNG image.
+
+    The simulation is performed on the spatial domain (0,1) with homogeneous Dirichlet boundary conditions.
     """
 
     print(f"run_sup_dxdt: seed={seed}, output={out_name}, M={M}")

@@ -1,5 +1,5 @@
 """Module for constructing finite-difference Laplacian matrices with homogeneous
-Dirichlet boundary conditions on a unit interval.
+Dirichlet boundary conditions on the spatial domain (0,1).
 
 This module assembles a second-order central difference Laplacian matrix,
 scaled appropriately for a unit domain discretization.
