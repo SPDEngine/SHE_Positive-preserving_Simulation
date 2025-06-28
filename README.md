@@ -20,6 +20,42 @@ Further background and a brief podcast discussion can be found in the
 official reference entry at
 <https://spdes-bib.readthedocs.io/en/latest/bib_entries/brehier.cohen.ea:24:analysis.html>.
 
+## Usage
+
+To install and run this project, follow these steps:
+
+1.  **Clone the repository:**
+
+    ```bash
+    git clone https://github.com/lzc0090/SHE_Positive-preserving_Simulation.git
+    cd SHE_Positive-preserving_Simulation
+    ```
+
+2.  **Install the package:**
+
+    ```bash
+    pip install .
+    ```
+
+3.  **Run the simulation:**
+
+    To run the simulation with default parameters and generate plots, use the following command:
+
+    ```bash
+    she-sim
+    ```
+
+    You can also customize the simulation with the following options:
+
+    ```bash
+    she-sim --seed <seed> --samples <samples> --output <output_prefix> --no-plot
+    ```
+
+    -   `--seed`: Random seed for the simulation (default: 93).
+    -   `--samples`: Number of Monte Carlo samples (default: 18).
+    -   `--output`: Prefix for the output file names (default: `msSupDxDt`).
+    -   `--no-plot`: Suppress the generation of plots.
+
 ## License
 
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
