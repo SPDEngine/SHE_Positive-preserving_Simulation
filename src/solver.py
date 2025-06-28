@@ -17,7 +17,7 @@ from .noise import generate_noise
 from tqdm.auto import trange
 
 
-def run_sup_dxdt(seed: int, out_name: str, M: int = 4, alphaN: float = 1.0, T: float = 0.5) -> None:
+def run_sup_dxdt(seed: int, out_name: str, M: int = 4, alphaN: float = 1.0, T: float = 0.5, discretization_level: int = 10) -> None:
     """Run the splitting scheme experiment for the stochastic heat equation.
 
     Parameters
@@ -32,6 +32,8 @@ def run_sup_dxdt(seed: int, out_name: str, M: int = 4, alphaN: float = 1.0, T: f
         Noise strength parameter (default is 1.0).
     T : float, optional
         End time of the simulation (default is 0.5).
+    discretization_level : int, optional
+        The level of spatial discretization (default is 10). A higher value means finer discretization.
 
     Returns
     -------
@@ -54,25 +56,24 @@ def run_sup_dxdt(seed: int, out_name: str, M: int = 4, alphaN: float = 1.0, T: f
 
     u_0 = lambda x: np.cos(np.pi * (x - 0.5))
 
-    hh = 2.0 ** np.arange(-10, -10, -1)
-    ddt = hh ** 2
-    h_ex = 2.0 ** -10
-    dt_ex = h_ex ** 2
+    h = 2.0 ** -discretization_level
+    dt = h ** 2
 
-    NNt = ((T - t_0) / ddt).astype(int)
-    Nt_ex = int((T - t_0) / dt_ex)
+    Nt = int((T - t_0) / dt)
+    x = np.arange(x_0 + h, x_end, h)
+    Nx = len(x) + 1
 
-    Nx = []
-    for h in hh:
-        xx = np.arange(x_0 + h, x_end, h)
-        Nx.append(len(xx) + 1)
-    x_ex = np.arange(x_0 + h_ex, x_end, h_ex)
-    Nx_ex = len(x_ex) + 1
+    dt_num = np.array([dt])
+    h_num = np.array([h])
+    Nt_num = np.array([Nt])
+    Nx_num = np.array([Nx])
 
-    dt_num = np.concatenate([ddt, [dt_ex]])
-    h_num = np.concatenate([hh, [h_ex]])
-    Nt_num = np.concatenate([NNt, [Nt_ex]])
-    Nx_num = np.concatenate([Nx, [Nx_ex]])
+    # For compatibility with existing code that expects _ex variables
+    h_ex = h
+    dt_ex = dt
+    Nt_ex = Nt
+    x_ex = x
+    Nx_ex = Nx
 
     # storage for mean-square errors
     errorLT = [[None] * M for _ in range(len(dt_num))]
@@ -85,20 +86,21 @@ def run_sup_dxdt(seed: int, out_name: str, M: int = 4, alphaN: float = 1.0, T: f
     const_factor = -0.5 * (f_factor ** 2) * (Nx_ex - 1) * dt_ex
 
     # Precompute coarse-level operators and grouping factors
-    expD_list = []
-    k_list = []
-    kx_list = []
-    levels = len(dt_num)
-    for l in range(levels):
-        dt = dt_num[l]
-        h = h_num[l]
-        k = int(round(dt / dt_ex))
-        kx = int(round(h / h_ex))
-        k_list.append(k)
-        kx_list.append(kx)
-        Nx_l = int(Nx_num[l])
-        D_l = make_laplacian(Nx_l)
-        expD_list.append(expm(dt * D_l))
+    # These are no longer needed with a single discretization level
+    # expD_list = []
+    # k_list = []
+    # kx_list = []
+    # levels = len(dt_num)
+    # for l in range(levels):
+    #     dt = dt_num[l]
+    #     h = h_num[l]
+    #     k = int(round(dt / dt_ex))
+    #     kx = int(round(h / h_ex))
+    #     k_list.append(k)
+    #     kx_list.append(kx)
+    #     Nx_l = int(Nx_num[l])
+    #     D_l = make_laplacian(Nx_l)
+    #     expD_list.append(expm(dt * D_l))
 
     for m in trange(M, desc="samples"):
         # generate fine noise increments and precompute multiplicative factors

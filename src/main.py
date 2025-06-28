@@ -11,6 +11,7 @@ def main():
     parser.add_argument('--samples', type=int,            default=4,          help='Number of Monte Carlo samples.')
     parser.add_argument('--alphaN',  type=float,          default=1.0,         help='Noise strength parameter.')
     parser.add_argument('--T',       type=float,          default=0.5,         help='End time of the simulation.')
+    parser.add_argument('--discretization_level', type=int, default=10, help='Level of spatial discretization.')
     parser.add_argument('--no-plot', action='store_true',                      help='Suppress plotting the results.')
 
     if len(sys.argv) == 1:
@@ -19,7 +20,7 @@ def main():
 
     args = parser.parse_args()
 
-    run_sup_dxdt(args.seed, args.output, args.samples, args.alphaN, args.T)
+    run_sup_dxdt(args.seed, args.output, args.samples, args.alphaN, args.T, args.discretization_level)
 
     if not args.no_plot:
         plot_main()
