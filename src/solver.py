@@ -20,7 +20,7 @@ from .noise import generate_noise
 from tqdm.auto import trange
 
 
-def run_sup_dxdt(seed: int, out_name: str, M: int = 18) -> None:
+def run_sup_dxdt(seed: int, out_name: str, M: int = 18, alphaN: float = 1.0) -> None:
     """Run the msSupDxDt experiment replicating the MATLAB implementation.
 
     Parameters
@@ -45,14 +45,11 @@ def run_sup_dxdt(seed: int, out_name: str, M: int = 18) -> None:
     print(f"run_sup_dxdt: seed={seed}, output={out_name}, M={M}")
     rng = np.random.default_rng(seed)
 
-    alphaN = 1.0
+    
     x_0, x_end = 0.0, 1.0
     t_0, t_end = 0.5 * 0, 0.5  # t_0=0; t_end=.5 in the scripts
 
     u_0 = lambda x: np.cos(np.pi * (x - 0.5))
-
-    g = lambda u: alphaN * u
-    f = lambda u: alphaN
 
     hh = 2.0 ** np.arange(-10, -10, -1)
     ddt = hh ** 2
