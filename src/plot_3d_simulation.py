@@ -14,7 +14,7 @@ plt.rcParams['font.family'] = 'serif'
 plt.rcParams['font.serif'] = ['Computer Modern Roman']
 
 
-def main(fps: int = 10, output_prefix: str = "msSupDxDt", M: int = 4) -> None:
+def main(fps: int = 10, output_prefix: str = "msSupDxDt", M: int = 4, max_animation_frames: int = 120) -> None:
     """Load experiment data and display a 3-D plot."""
     data_path = Path(f"{output_prefix}.npz")
     if not data_path.exists():
@@ -40,7 +40,7 @@ def main(fps: int = 10, output_prefix: str = "msSupDxDt", M: int = 4) -> None:
 
         # Use full resolution for plotting
         s_space = 1
-        s_time = 1
+        s_time = max(1, num_time_steps // max_animation_frames)
         space_sub = space_grid
         time_sub = time_grid
         u_sub = u_exLT

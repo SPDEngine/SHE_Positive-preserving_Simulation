@@ -43,10 +43,12 @@ To install and run this project, follow these steps:
     she-sim
     ```
 
-    You can also customize the simulation with the following options:
+    You can also customize the simulation using command-line arguments or a YAML configuration file.
+
+### Command-line Arguments
 
     ```bash
-    she-sim --seed <seed> --samples <samples> --output <output_prefix> --alphaN <alphaN> --T <T> --discretization_level <discretization_level> --no-plot
+    she-sim --seed <seed> --samples <samples> --output <output_prefix> --alphaN <alphaN> --T <T> --discretization_level <discretization_level> --fps <fps> --max_animation_frames <max_animation_frames> --no-plot
     ```
 
     -   `--seed`: Random seed for the simulation (default: 93).
@@ -56,7 +58,31 @@ To install and run this project, follow these steps:
     -   `--T`: End time of the simulation (default: 0.5).
     -   `--discretization_level`: Level of spatial discretization (default: 10). The spatial step size `h` is calculated as `2**(-discretization_level)`.
     -   `--fps`: Frames per second for the animation (default: 10).
+    -   `--max_animation_frames`: Maximum number of frames for the animation (default: 120).
     -   `--no-plot`: Suppress the generation of plots.
+
+### Configuration File
+
+You can also provide a YAML configuration file using the `--config` option. Command-line arguments will override values specified in the configuration file.
+
+Example `she-sim-config.yaml`:
+
+```yaml
+seed: 123
+samples: 10
+output: custom_output
+alphaN: 0.8
+T: 1.0
+discretization_level: 8
+fps: 15
+no-plot: false
+```
+
+To run with a configuration file:
+
+```bash
+she-sim --config she-sim-config.yaml
+```
 
 ## License
 

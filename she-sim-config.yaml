@@ -1,0 +1,9 @@
+seed: 123
+samples: 2
+output: Demo
+alphaN: 0.4
+T: 0.5
+discretization_level: 9
+fps: 30
+max_animation_frames: 120
+no-plot: false
