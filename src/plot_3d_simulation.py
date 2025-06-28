@@ -96,7 +96,7 @@ def main(fps: int = 10, output_prefix: str = "msSupDxDt") -> None:
 
     ax_2d.set_xlabel('Space')
     ax_2d.set_ylabel(r'$u(t,x)$')
-    ax_2d.set_title(r'$u(t,x)$ at $t$= {time_grid[0]:.3f}')
+    ax_2d.set_title(f'$u(t,x)$ at $t$= {time_grid[0]:.3f}')
     ax_2d.set_ylim(u_exLT.min(), u_exLT.max()) # Set fixed y-limits
     plt.colorbar(cm.ScalarMappable(norm=norm, cmap=cmap), ax=ax_2d, label='u_exLT value')
     plt.tight_layout()
@@ -109,7 +109,7 @@ def main(fps: int = 10, output_prefix: str = "msSupDxDt") -> None:
         line_collection.set_segments(segments)
         line_collection.set_array(u_exLT[:, i])
         line_contour.set_ydata(u_exLT[:, i])
-        ax_2d.set_title(r'$u(t,x)$ at $t$ = {time_grid[i]:.3f}')
+        ax_2d.set_title(f'$u(t,x)$ at $t$ = {time_grid[i]:.3f}')
         return line_collection, line_contour,
 
     # Subsample frames for faster animation
