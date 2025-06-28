@@ -38,13 +38,12 @@ def main(fps: int = 10, output_prefix: str = "msSupDxDt", M: int = 4) -> None:
         space_grid = np.linspace(0, 1, num_spatial_points)
         # print(f"Space grid: {space_grid}")
 
-        # Downsample grids for faster 3D plotting and animation
-        max_pts = 100
-        s_space = max(1, num_spatial_points // max_pts)
-        s_time = max(1, num_time_steps // max_pts)
-        space_sub = space_grid[::s_space]
-        time_sub = time_grid[::s_time]
-        u_sub = u_exLT[::s_space, ::s_time]
+        # Use full resolution for plotting
+        s_space = 1
+        s_time = 1
+        space_sub = space_grid
+        time_sub = time_grid
+        u_sub = u_exLT
 
         # 3D Plot
         fig_3d = plt.figure()
