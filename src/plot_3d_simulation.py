@@ -57,7 +57,7 @@ def main(fps: int = 10, output_prefix: str = "msSupDxDt", M: int = 4) -> None:
         ax_3d.set_zlabel(r'$u(t,x)$')
         ax_3d.set_title(r'3D Mesh Plot of $u(t,x)$ vs. Time and Space')
         plt.tight_layout()
-        fig_3d.savefig(f'{output_prefix}_{M}-{m_idx+1}_3d.png')
+        fig_3d.savefig(f'{output_prefix}_{M}-{m_idx+1}_3d.png', dpi=300, bbox_inches='tight')
         print(f"3D plot saved as {output_prefix}_{M}-{m_idx+1}_3d.png")
 
         # 2D Animation
