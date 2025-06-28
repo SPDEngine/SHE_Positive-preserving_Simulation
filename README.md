@@ -54,7 +54,7 @@ To install and run this project, follow these steps:
     -   `--output`: Prefix for the output file names (default: `msSupDxDt`).
     -   `--alphaN`: Noise strength parameter (default: 1.0).
     -   `--T`: End time of the simulation (default: 0.5).
-    -   `--discretization_level`: Level of spatial discretization (default: 10).
+    -   `--discretization_level`: Level of spatial discretization (default: 10). The spatial step size `h` is calculated as `2**(-discretization_level)`.
     -   `--no-plot`: Suppress the generation of plots.
 
 ## License

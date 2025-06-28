@@ -33,7 +33,7 @@ def run_sup_dxdt(seed: int, out_name: str, M: int = 4, alphaN: float = 1.0, T: f
     T : float, optional
         End time of the simulation (default is 0.5).
     discretization_level : int, optional
-        The level of spatial discretization (default is 10). A higher value means finer discretization.
+        The level of spatial discretization (default is 10). The spatial step size `h` is calculated as `2**(-discretization_level)`.
 
     Returns
     -------
