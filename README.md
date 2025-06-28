@@ -52,7 +52,7 @@ To install and run this project, follow these steps:
     ```
 
     -   `--seed`: Random seed for the simulation (default: 93).
-    -   `--samples`: Number of Monte Carlo samples (default: 18).
+    -   `--samples`: Number of Monte Carlo samples (default: 4).
     -   `--output`: Prefix for the output file names (default: `msSupDxDt`).
     -   `--alphaN`: Noise strength parameter (default: 1.0).
     -   `--no-plot`: Suppress the generation of plots.

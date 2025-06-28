@@ -5,10 +5,10 @@ from .solver import run_sup_dxdt
 from .plot_3d_simulation import main as plot_main
 
 def main():
-    parser = argparse.ArgumentParser(description='Run SHE simulation and plot results.')
+    parser = argparse.ArgumentParser(description='Run SHE simulation and plot results.', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument('--seed',    type=int,            default=93,          help='Random seed for the simulation.')
     parser.add_argument('--output',  type=str,            default='msSupDxDt', help='Output file name prefix.')
-    parser.add_argument('--samples', type=int,            default=18,          help='Number of Monte Carlo samples.')
+    parser.add_argument('--samples', type=int,            default=4,          help='Number of Monte Carlo samples.')
     parser.add_argument('--alphaN',  type=float,          default=1.0,         help='Noise strength parameter.')
     parser.add_argument('--no-plot', action='store_true',                      help='Suppress plotting the results.')
 
