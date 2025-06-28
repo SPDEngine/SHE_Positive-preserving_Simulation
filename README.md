@@ -55,6 +55,7 @@ To install and run this project, follow these steps:
     -   `--alphaN`: Noise strength parameter (default: 1.0).
     -   `--T`: End time of the simulation (default: 0.5).
     -   `--discretization_level`: Level of spatial discretization (default: 10). The spatial step size `h` is calculated as `2**(-discretization_level)`.
+    -   `--fps`: Frames per second for the animation (default: 10).
     -   `--no-plot`: Suppress the generation of plots.
 
 ## License

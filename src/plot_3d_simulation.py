@@ -23,7 +23,7 @@ from mpl_toolkits.mplot3d import Axes3D  # noqa: F401  # for 3-D plotting
 from tqdm import tqdm
 
 
-def main() -> None:
+def main(fps: int = 10) -> None:
     """Load experiment data and display a 3-D plot."""
     data_path = Path("msSupDxDt.npz")
     if not data_path.exists():
@@ -102,7 +102,7 @@ def main() -> None:
             def update_progress(i, n):
                 pbar.update(1)
 
-            ani.save('2d_simulation.mp4', writer='ffmpeg', fps=10, progress_callback=update_progress)
+            ani.save('2d_simulation.mp4', writer='ffmpeg', fps=fps, progress_callback=update_progress)
 
         print()
         print("Animation saved as 2d_simulation.mp4")
