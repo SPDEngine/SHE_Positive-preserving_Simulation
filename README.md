@@ -100,6 +100,10 @@ Running the simulation will generate `.npz`, `.png`, and `.mp4` files in the roo
 -   `.png` files: 3D plots of the simulation results (e.g., `msSupDxDt_sample_1_3d.png`).
 -   `.mp4` files: 2D animations of the simulation results (e.g., `msSupDxDt_sample_1_2d.mp4`).
 
+## To-Do
+
+-   Allow other initial conditions.
+
 ## Contributing
 
 We welcome contributions to this project! If you'd like to contribute, please follow these steps:
