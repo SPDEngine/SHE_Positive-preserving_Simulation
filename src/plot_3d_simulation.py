@@ -16,8 +16,7 @@ from pathlib import Path
 
 import numpy as np
 import matplotlib.pyplot as plt
-import matplotlib.pyplot as plt
-from matplotlib import cm
+from matplotlib import cm, colors
 import matplotlib.animation as animation
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401  # for 3-D plotting
 from tqdm import tqdm
@@ -76,24 +75,34 @@ def main(fps: int = 10) -> None:
 
     # 2D Animation
     fig_2d, ax_2d = plt.subplots()
-    line, = ax_2d.plot(space_grid, u_exLT[:, 0], color='blue')
+    # Set up colormap and normalization for the 2D plot
+    norm = colors.Normalize(vmin=u_exLT.min(), vmax=u_exLT.max())
+    cmap = cm.viridis
+    # Initial plot with fill_between
+    fill_plot = ax_2d.fill_between(space_grid, 0, u_exLT[:, 0], color=cmap(norm(u_exLT[:, 0])))
+    line, = ax_2d.plot(space_grid, u_exLT[:, 0], color='black', linewidth=0.5) # Add a thin black line for contour
 
     ax_2d.set_xlabel('Space')
     ax_2d.set_ylabel('u_exLT')
     ax_2d.set_title(f'2D Plot of u_exLT at Time = {time_grid[0]:.3f}')
     ax_2d.set_ylim(u_exLT.min(), u_exLT.max()) # Set fixed y-limits
+    plt.colorbar(cm.ScalarMappable(norm=norm, cmap=cmap), ax=ax_2d, label='u_exLT value')
     plt.tight_layout()
-    # plt.show()
 
     # Create the animation
     def animate(i):
+        # Remove previous fill_between collection
+        for fc in ax_2d.collections:
+            fc.remove()
+        # Update fill_between with new data and colors
+        fill_plot = ax_2d.fill_between(space_grid, 0, u_exLT[:, i], color=cmap(norm(u_exLT[:, i])))
         line.set_ydata(u_exLT[:, i])
         ax_2d.set_title(f'2D Plot of u_exLT at Time = {time_grid[i]:.3f}')
-        return line,
+        return fill_plot, line,
 
     # Subsample frames for faster animation
     frame_idx = np.arange(0, num_time_steps, s_time)
-    ani = animation.FuncAnimation(fig_2d, animate, frames=frame_idx, interval=50, blit=True)
+    ani = animation.FuncAnimation(fig_2d, animate, frames=frame_idx, interval=50, blit=False)
 
     # Save the animation
     print("Saving animation... This may take a while.")
