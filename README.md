@@ -1,5 +1,8 @@
 # Simulation of SHE with positivity-preserving splitting scheme
 
+The goal of this repository is to simulate the Stochastic Heat Equation (SHE)
+using a positivity-preserving splitting scheme, with outputs presented as 3D
+plots and MP4 animations.
 
 ## Reference
 
@@ -22,3 +25,4 @@ official reference entry at
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 
 The code is translated from Matlab to Python by Le Chen. Le Chen would like to thank David Cohen for his help in understanding the original MATLAB code.
+
