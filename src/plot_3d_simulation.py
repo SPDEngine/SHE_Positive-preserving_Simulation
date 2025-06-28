@@ -17,6 +17,7 @@ from pathlib import Path
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import cm, colors
+from matplotlib.collections import LineCollection
 import matplotlib.animation as animation
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401  # for 3-D plotting
 from tqdm import tqdm
@@ -78,9 +79,15 @@ def main(fps: int = 10) -> None:
     # Set up colormap and normalization for the 2D plot
     norm = colors.Normalize(vmin=u_exLT.min(), vmax=u_exLT.max())
     cmap = cm.viridis
-    # Initial plot with fill_between
-    fill_plot = ax_2d.fill_between(space_grid, 0, u_exLT[:, 0], color=cmap(norm(u_exLT[:, 0])))
-    line, = ax_2d.plot(space_grid, u_exLT[:, 0], color='black', linewidth=0.5) # Add a thin black line for contour
+    # Initial plot with LineCollection for gradient line
+    points = np.array([space_grid, u_exLT[:, 0]]).T.reshape(-1, 1, 2)
+    segments = np.concatenate([points[:-1], points[1:]], axis=1)
+    line_collection = LineCollection(segments, cmap=cmap, norm=norm)
+    line_collection.set_array(u_exLT[:, 0])
+    line_collection.set_linewidth(2) # Adjust linewidth as desired
+    ax_2d.add_collection(line_collection)
+    # Add a thin black line on top for better contour visibility
+    line_contour, = ax_2d.plot(space_grid, u_exLT[:, 0], color='black', linewidth=0.5)
 
     ax_2d.set_xlabel('Space')
     ax_2d.set_ylabel('u_exLT')
@@ -91,14 +98,14 @@ def main(fps: int = 10) -> None:
 
     # Create the animation
     def animate(i):
-        # Remove previous fill_between collection
-        for fc in ax_2d.collections:
-            fc.remove()
-        # Update fill_between with new data and colors
-        fill_plot = ax_2d.fill_between(space_grid, 0, u_exLT[:, i], color=cmap(norm(u_exLT[:, i])))
-        line.set_ydata(u_exLT[:, i])
+        # Update LineCollection with new data and colors
+        points = np.array([space_grid, u_exLT[:, i]]).T.reshape(-1, 1, 2)
+        segments = np.concatenate([points[:-1], points[1:]], axis=1)
+        line_collection.set_segments(segments)
+        line_collection.set_array(u_exLT[:, i])
+        line_contour.set_ydata(u_exLT[:, i])
         ax_2d.set_title(f'2D Plot of u_exLT at Time = {time_grid[i]:.3f}')
-        return fill_plot, line,
+        return line_collection, line_contour,
 
     # Subsample frames for faster animation
     frame_idx = np.arange(0, num_time_steps, s_time)
