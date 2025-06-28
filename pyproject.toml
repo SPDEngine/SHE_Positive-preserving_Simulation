@@ -1,0 +1,28 @@
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "she-positive-preserving-simulation"
+version = "0.1.0"
+authors = [
+    { name="Le Chen", email="le.chen@auburn.edu" },
+]
+description = "A Python implementation of a positivity-preserving splitting scheme for the stochastic heat equation."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: Creative Commons Attribution 4.0 International",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "numpy",
+    "scipy",
+    "matplotlib",
+    "tqdm",
+]
+
+[project.scripts]
+she-sim = "src.main:main"

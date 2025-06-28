@@ -111,5 +111,4 @@ def main() -> None:
         print("Please ensure ffmpeg is installed and accessible in your PATH.")
 
 
-if __name__ == "__main__":
-    main()
+

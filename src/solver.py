@@ -173,27 +173,4 @@ def run_sup_dxdt(seed: int, out_name: str, M: int = 18) -> None:
     # print(f"Results stored in {out} and {fig_path}")
 
 
-def main(argv=None):
-    """Command-line interface for run_sup_dxdt.
 
-    Parses command-line arguments and invokes 'run_sup_dxdt'.
-
-    Parameters
-    ----------
-    argv : list of str or None
-        Arguments to parse (defaults to sys.argv[1:] if None).
-
-    Returns
-    -------
-    None
-    """
-    parser = argparse.ArgumentParser(description="Run msSupDxDt experiment")
-    parser.add_argument("--seed", type=int, default=93)
-    parser.add_argument("--output", type=str, default="msSupDxDt")
-    parser.add_argument("--samples", type=int, default=1)
-    args = parser.parse_args(argv)
-    run_sup_dxdt(args.seed, args.output, args.samples)
-
-
-if __name__ == "__main__":
-    main()
