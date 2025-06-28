@@ -22,6 +22,11 @@ import matplotlib.animation as animation
 from mpl_toolkits.mplot3d import Axes3D  # noqa: F401  # for 3-D plotting
 from tqdm import tqdm
 
+# Set up Matplotlib for LaTeX rendering
+plt.rcParams['text.usetex'] = True
+plt.rcParams['font.family'] = 'serif'
+plt.rcParams['font.serif'] = ['Computer Modern Roman']
+
 
 def main(fps: int = 10, output_prefix: str = "msSupDxDt") -> None:
     """Load experiment data and display a 3-D plot."""
@@ -64,15 +69,15 @@ def main(fps: int = 10, output_prefix: str = "msSupDxDt") -> None:
     ax_3d = fig_3d.add_subplot(111, projection='3d')
     X_3d, T_3d = np.meshgrid(space_sub, time_sub, indexing='ij')
     surf = ax_3d.plot_surface(X_3d, T_3d, u_sub, cmap=cm.viridis, linewidth=0, antialiased=False)
-    fig_3d.colorbar(surf, shrink=0.5, aspect=5)
+    # fig_3d.colorbar(surf, shrink=0.5, aspect=5)
 
     ax_3d.set_xlabel('Space')
     ax_3d.set_ylabel('Time')
-    ax_3d.set_zlabel('u_exLT')
-    ax_3d.set_title('3D Mesh Plot of u_exLT vs. Time and Space')
+    ax_3d.set_zlabel(r'$u(t,x)$')
+    ax_3d.set_title(r'$u(t,x)$')
     plt.tight_layout()
     fig_3d.savefig(f'{output_prefix}_3d_simulation.png')
-    print(f"3D plot saved as {output_prefix}_3d_simulation.png")
+    print(f"3D plot saved as {output_prefix}_3d.png")
 
     # 2D Animation
     fig_2d, ax_2d = plt.subplots()
@@ -90,8 +95,8 @@ def main(fps: int = 10, output_prefix: str = "msSupDxDt") -> None:
     line_contour, = ax_2d.plot(space_grid, u_exLT[:, 0], color='black', linewidth=0.5)
 
     ax_2d.set_xlabel('Space')
-    ax_2d.set_ylabel('u_exLT')
-    ax_2d.set_title(f'2D Plot of u_exLT at Time = {time_grid[0]:.3f}')
+    ax_2d.set_ylabel(r'$u(t,x)$')
+    ax_2d.set_title(r'$u(t,x)$ at $t$= {time_grid[0]:.3f}')
     ax_2d.set_ylim(u_exLT.min(), u_exLT.max()) # Set fixed y-limits
     plt.colorbar(cm.ScalarMappable(norm=norm, cmap=cmap), ax=ax_2d, label='u_exLT value')
     plt.tight_layout()
@@ -104,7 +109,7 @@ def main(fps: int = 10, output_prefix: str = "msSupDxDt") -> None:
         line_collection.set_segments(segments)
         line_collection.set_array(u_exLT[:, i])
         line_contour.set_ydata(u_exLT[:, i])
-        ax_2d.set_title(f'2D Plot of u_exLT at Time = {time_grid[i]:.3f}')
+        ax_2d.set_title(r'$u(t,x)$ at $t$ = {time_grid[i]:.3f}')
         return line_collection, line_contour,
 
     # Subsample frames for faster animation
@@ -118,7 +123,7 @@ def main(fps: int = 10, output_prefix: str = "msSupDxDt") -> None:
             def update_progress(i, n):
                 pbar.update(1)
 
-            ani.save(f'{output_prefix}_2d_simulation.mp4', writer='ffmpeg', fps=fps, progress_callback=update_progress)
+            ani.save(f'{output_prefix}_2d.mp4', writer='ffmpeg', fps=fps, progress_callback=update_progress)
 
         print()
         print(f"Animation saved as {output_prefix}_2d_simulation.mp4")
