@@ -23,9 +23,9 @@ from mpl_toolkits.mplot3d import Axes3D  # noqa: F401  # for 3-D plotting
 from tqdm import tqdm
 
 
-def main(fps: int = 10) -> None:
+def main(fps: int = 10, output_prefix: str = "msSupDxDt") -> None:
     """Load experiment data and display a 3-D plot."""
-    data_path = Path("msSupDxDt.npz")
+    data_path = Path(f"{output_prefix}.npz")
     if not data_path.exists():
         raise FileNotFoundError(f"{data_path} not found")
 
@@ -71,8 +71,8 @@ def main(fps: int = 10) -> None:
     ax_3d.set_zlabel('u_exLT')
     ax_3d.set_title('3D Mesh Plot of u_exLT vs. Time and Space')
     plt.tight_layout()
-    fig_3d.savefig('3d_simulation.png')
-    print("3D plot saved as 3d_simulation.png")
+    fig_3d.savefig(f'{output_prefix}_3d_simulation.png')
+    print(f"3D plot saved as {output_prefix}_3d_simulation.png")
 
     # 2D Animation
     fig_2d, ax_2d = plt.subplots()
@@ -118,10 +118,10 @@ def main(fps: int = 10) -> None:
             def update_progress(i, n):
                 pbar.update(1)
 
-            ani.save('2d_simulation.mp4', writer='ffmpeg', fps=fps, progress_callback=update_progress)
+            ani.save(f'{output_prefix}_2d_simulation.mp4', writer='ffmpeg', fps=fps, progress_callback=update_progress)
 
         print()
-        print("Animation saved as 2d_simulation.mp4")
+        print(f"Animation saved as {output_prefix}_2d_simulation.mp4")
     except ValueError as e:
         print(f"Error saving animation: {e}")
         print("Please ensure ffmpeg is installed and accessible in your PATH.")
